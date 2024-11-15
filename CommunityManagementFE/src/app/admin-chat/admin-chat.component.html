@@ -1,0 +1,74 @@
+<div class="admin-chat-container">
+    <!-- Users List -->
+    <div class="users-list">
+      <div class="users-header">
+        <h3>Resident Chats</h3>
+      </div>
+      <div class="users-container">
+        <div *ngFor="let user of activeUsers" 
+             (click)="selectUser(user)"
+             [class.active]="selectedUser?.id === user.id"
+             class="user-item">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-info">
+            <div class="user-name">{{ user.name }}</div>
+            <div class="user-status">
+              <span class="status-dot"></span>
+              Resident
+            </div>
+          </div>
+          <div *ngIf="user.unreadCount > 0" class="unread-badge">
+            {{ user.unreadCount }}
+          </div>
+        </div>
+        <div *ngIf="activeUsers.length === 0" class="no-users">
+          No active chats
+        </div>
+      </div>
+    </div>
+  
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <div *ngIf="!selectedUser" class="no-chat-selected">
+        <i class="fas fa-comments"></i>
+        <p>Select a resident to start chatting</p>
+      </div>
+  
+      <ng-container *ngIf="selectedUser">
+        <div class="chat-header">
+          <div class="user-info">
+            <i class="fas fa-user"></i>
+            <span>{{ selectedUser.name }}</span>
+          </div>
+        </div>
+  
+        <div class="messages-container">
+          <div *ngFor="let message of messages" 
+               [class.sent]="message.senderId === 'ADMIN'"
+               [class.received]="message.senderId !== 'ADMIN'"
+               class="message">
+            <div class="message-content">{{ message.content }}</div>
+            <div class="message-time">{{ message.timestamp | date:'short' }}</div>
+          </div>
+          <div *ngIf="messages.length === 0" class="no-messages">
+            No messages yet
+          </div>
+        </div>
+  
+        <form [formGroup]="messageForm" 
+              (ngSubmit)="sendMessage()" 
+              class="chat-input">
+          <input type="text" 
+                 formControlName="content" 
+                 placeholder="Type a message..."
+                 (keyup.enter)="sendMessage()">
+          <button type="submit" 
+                  [disabled]="!messageForm.valid">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </ng-container>
+    </div>
+  </div>

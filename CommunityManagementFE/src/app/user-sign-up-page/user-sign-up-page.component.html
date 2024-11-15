@@ -1,0 +1,116 @@
+<div class="signup-container">
+    <!-- Logo in top left -->
+    <div class="logo-section">
+      <h1 class="logo-text">MyCommunity</h1>
+      <div class="logo-underline"></div>
+    </div>
+  
+    <!-- Main signup card -->
+    <div class="signup-card">
+      <!-- Left side form -->
+      <div class="form-left">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input 
+              type="text" 
+              id="fullName" 
+              formControlName="fullName" 
+              class="form-control"
+              placeholder="Enter your full name">
+            <div *ngIf="signupForm.get('fullName')?.touched && signupForm.get('fullName')?.invalid" 
+                 class="error-message">
+              Full name is required
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email" 
+              class="form-control"
+              placeholder="Enter your email">
+            <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" 
+                 class="error-message">
+              <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</span>
+              <span *ngIf="signupForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              formControlName="phone" 
+              class="form-control"
+              placeholder="Enter your phone number">
+            <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid" 
+                 class="error-message">
+              <span *ngIf="signupForm.get('phone')?.errors?.['required']">Phone number is required</span>
+              <span *ngIf="signupForm.get('phone')?.errors?.['pattern']">Please enter a valid phone number</span>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+      <!-- Right side form -->
+      <div class="form-right">
+        <form [formGroup]="signupForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username" 
+              class="form-control"
+              placeholder="Choose username">
+            <div *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.invalid" 
+                 class="error-message">
+              Username is required
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password" 
+              class="form-control"
+              placeholder="Choose password">
+            <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" 
+                 class="error-message">
+              <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required</span>
+              <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Role</label>
+            <div class="role-selector">
+              <div class="role-option" *ngFor="let role of roles">
+                <input 
+                  type="radio" 
+                  [id]="role" 
+                  formControlName="role" 
+                  [value]="role">
+                <label [for]="role">{{role}}</label>
+              </div>
+            </div>
+          </div>
+  
+          <button type="submit" [disabled]="!signupForm.valid" (click)="onSubmit()">
+            <span class="loading-spinner" *ngIf="loading"></span>
+            Sign Up
+          </button>
+  
+          <div class="text-center mt-3">
+            Already have an account? <a routerLink="/login">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

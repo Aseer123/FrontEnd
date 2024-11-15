@@ -1,0 +1,122 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="user-info" (click)="toggleProfile()">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-details">
+          <h3>{{ currentUser?.username || 'Resident' }}</h3>
+          <span class="user-role">{{ currentUser?.role || 'RESIDENT' }}</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li [class.active]="activeSection === 'dashboard'">
+            <a (click)="scrollToSection('dashboard', $event)">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </li>
+          <li [class.active]="activeSection === 'maintenance'">
+            <a (click)="scrollToSection('maintenance', $event)">
+              <i class="fas fa-tools"></i>
+              Maintenance
+            </a>
+          </li>
+          <li [class.active]="activeSection === 'notifications'">
+            <a (click)="scrollToSection('notifications', $event)">
+              <i class="fas fa-bell"></i>
+              Notifications
+              <span class="notification-badge" *ngIf="notifications.length > 0">
+                {{ notifications.length }}
+              </span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+  
+      <div class="sidebar-footer">
+        <button (click)="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  
+    <!-- Main Content -->
+    <div class="main-content" #mainContent>
+      <!-- Profile Modal -->
+      <div class="profile-modal" [class.show-profile]="showProfile" *ngIf="currentUser">
+        <!-- Profile modal content remains the same -->
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+        <button class="close-btn" (click)="clearError()">×</button>
+      </div>
+  
+      <!-- Dashboard Section -->
+      <div id="dashboard" class="dashboard-section">
+        <div class="section-header">
+          <h3>Dashboard Overview</h3>
+        </div>
+        <div class="dashboard-content">
+          <!-- Add your dashboard content here -->
+        </div>
+      </div>
+
+      <!-- Notifications Section -->
+      <div id="notifications" class="notifications-section">
+        <div class="section-header">
+          <h3>Notifications</h3>
+          <span class="refresh-btn" (click)="loadNotifications()" [class.spinning]="loadingNotifications">
+            <i class="fas fa-sync-alt"></i>
+          </span>
+        </div>
+        <div class="notifications-list">
+          <div *ngFor="let notification of notifications" class="notification-item">
+            <p class="notification-content">{{ notification.content }}</p>
+            <small class="notification-date">{{ notification.date | date:'medium' }}</small>
+          </div>
+          <div *ngIf="notifications.length === 0" class="no-notifications">
+            No notifications available
+          </div>
+        </div>
+      </div>
+  
+      <!-- Maintenance Tasks Section -->
+      <div id="maintenance" class="maintenance-section">
+        <div class="section-header">
+          <h3>Maintenance Tasks</h3>
+          <span class="refresh-btn" (click)="loadTasks()" [class.spinning]="loadingTasks">
+            <i class="fas fa-sync-alt"></i>
+          </span>
+        </div>
+
+        <div class="loading-spinner" *ngIf="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          Loading tasks...
+        </div>
+  
+        <div class="task-list" *ngIf="!loading">
+          <div *ngFor="let task of tasks" class="task-item">
+            <div class="task-header">
+              <span class="task-status" [ngClass]="getStatusClass(task.status)">
+                {{ task.status }}
+              </span>
+            </div>
+            <p class="task-description">{{ task.description }}</p>
+            <small class="task-date">Scheduled: {{ task.scheduledDate | date }}</small>
+          </div>
+          <div *ngIf="tasks.length === 0" class="no-tasks">
+            No maintenance tasks available
+          </div>
+        </div>
+      </div>
+
+      <app-chat-bubble></app-chat-bubble>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap');
+
+/* Global font settings */
+body {
+  font-family: 'Archivo', sans-serif;
+}
+
+/* Logo text - semi-bold */
+.logo-text {
+  font-size: 32px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Form labels - semi-bold */
+label {
+  font-weight: 600;
+}
+
+/* Buttons - semi-bold */
+button {
+  font-weight: 600;
+}
+
+/* Links - semi-bold */
+a {
+  font-weight: 600;
+}
+
+/* Regular weight for input fields */
+.form-control {
+  font-weight: 400;
+}
+
+/* Error messages - semi-bold */
+.error-message {
+  font-weight: 600;
+}

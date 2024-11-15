@@ -1,0 +1,139 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <h3>Admin Dashboard</h3>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="active">
+            <a href="#dashboard">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#maintenance">
+              <i class="fas fa-tools"></i>
+              Maintenance
+            </a>
+          </li>
+          <li>
+            <a href="#notifications">
+              <i class="fas fa-bell"></i>
+              Notifications
+            </a>
+          </li>
+        </ul>
+      </nav>
+  
+      <div class="sidebar-footer">
+        <button (click)="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+        <button class="close-btn" (click)="clearError()">×</button>
+      </div>
+  
+      <!-- Maintenance Section -->
+      <div class="maintenance-section">
+        <h2>Create Maintenance Task</h2>
+        <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()" class="maintenance-form">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea 
+              id="description" 
+              formControlName="description" 
+              class="form-control"
+              rows="4"
+              placeholder="Enter task description"></textarea>
+          </div>
+  
+          <div class="form-group">
+            <label for="scheduledDate">Scheduled Date</label>
+            <input 
+              type="date" 
+              id="scheduledDate" 
+              formControlName="scheduledDate" 
+              class="form-control">
+          </div>
+  
+          <button type="submit" [disabled]="!maintenanceForm.valid || loading">
+            {{ loading ? 'Creating...' : 'Create Task' }}
+          </button>
+        </form>
+  
+        <!-- Tasks List -->
+        <div class="tasks-list">
+          <h3>Maintenance Tasks</h3>
+          <div class="loading-spinner" *ngIf="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            Loading tasks...
+          </div>
+  
+          <div class="task-items" *ngIf="!loading">
+            <div *ngFor="let task of tasks" class="task-item">
+              <div class="task-header">
+                <span class="task-status" [ngClass]="task.status.toLowerCase()">
+                  {{ task.status }}
+                </span>
+                <div class="task-actions">
+                  <select 
+                    [value]="task.status"
+                    (change)="onStatusChange($event, task.taskId!)"
+                    class="status-select">
+                    <option value="PENDING">Pending</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                  </select>
+                  <button class="delete-btn" (click)="deleteTask(task.taskId!)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <p class="task-description">{{ task.description }}</p>
+              <small class="task-date">Scheduled: {{ task.scheduledDate | date }}</small>
+            </div>
+            <div *ngIf="tasks.length === 0" class="no-tasks">
+              No maintenance tasks available
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Notification Section -->
+      <div class="notification-section">
+        <h3>Send Notification to Residents</h3>
+        <form [formGroup]="notificationForm" (ngSubmit)="sendNotification()" class="notification-form">
+          <div class="form-group">
+            <label for="content">Notification Message</label>
+            <textarea 
+              id="content" 
+              formControlName="content" 
+              class="form-control"
+              rows="3"
+              placeholder="Enter your message"></textarea>
+          </div>
+          <button type="submit" [disabled]="!notificationForm.valid">
+            Send Notification
+          </button>
+        </form>
+      </div>
+      <div class="section" id="queries">
+        <h2>Resident Queries</h2>
+        <app-admin-chat></app-admin-chat>
+      </div>
+    </div>
+</div>

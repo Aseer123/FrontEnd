@@ -1,0 +1,158 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://res.cloudinary.com/dxfqvcdeh/image/upload/v1731393567/x47pscmykes9bqfbm3gs.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f4f6f9;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0);
+  }
+  
+  .login-card {
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  .logo-section {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+  
+  .logo-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .logo-underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    margin: 12px auto 0;
+    border-radius: 2px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+  }
+  
+  .form-control:focus {
+    border-color: #3498db;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+    outline: none;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-message::before {
+    content: '⚠';
+    margin-right: 6px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  button:not(:disabled):hover {
+    background: linear-gradient(135deg, #2980b9 0%, #2472a4 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(52,152,219,0.2);
+  }
+  
+  button:disabled {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .text-center {
+    text-align: center;
+    margin-top: 20px;
+    color: #7f8c8d;
+  }
+  
+  .mt-3 {
+    margin-top: 15px;
+  }
+  
+  a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .login-card {
+      padding: 30px;
+    }
+  
+    .logo-text {
+      font-size: 28px;
+    }
+  }
+  
+  /* Add this in your index.html or import in your styles.css */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');

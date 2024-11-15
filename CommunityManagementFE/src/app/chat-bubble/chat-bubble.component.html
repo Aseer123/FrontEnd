@@ -1,0 +1,46 @@
+<div class="chat-container" [class.open]="isOpen">
+    <!-- Chat Bubble Button -->
+    <button class="chat-bubble" (click)="toggleChat()">
+      <i class="fas fa-comments"></i>
+      Give Feedback
+      <span *ngIf="unreadCount > 0" class="unread-badge">{{ unreadCount }}</span>
+    </button>
+  
+    <!-- Chat Window -->
+    <div class="chat-window" *ngIf="isOpen">
+      <div class="chat-header">
+        <h3>Feedback</h3>
+        <button class="close-btn" (click)="toggleChat()">×</button>
+      </div>
+  
+      <div class="messages-container" #messagesContainer>
+        <div *ngFor="let message of messages" 
+             [class.sent]="message.senderId === userId"
+             [class.received]="message.senderId === 'ADMIN'"
+             class="message">
+          <div class="message-content">{{ message.content }}</div>
+          <div class="message-time">
+            {{ message.timestamp | date:'short' }}
+            <span *ngIf="message.read && message.senderId === userId" 
+                  class="read-status">✓</span>
+          </div>
+        </div>
+        <div *ngIf="messages.length === 0" class="no-messages">
+          Raise queries now!
+        </div>
+      </div>
+  
+      <form [formGroup]="messageForm" 
+            (ngSubmit)="sendMessage()" 
+            class="chat-input">
+        <input type="text" 
+               formControlName="content" 
+               placeholder="Type a message..."
+               (keyup.enter)="sendMessage()">
+        <button type="submit" 
+                [disabled]="!messageForm.valid">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
